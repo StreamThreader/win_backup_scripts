@@ -182,11 +182,11 @@ foreach ($db_name in $db_names) {
 
         # check robocopy exit code
         if ($program.ExitCode) {
-            $tmp_msg = "move failed"
-            logwriter 1 $tmp_msg
-        } else {
             $tmp_msg = "move finished"
             logwriter 0 $tmp_msg
+        } else {
+            $tmp_msg = "move failed"
+            logwriter 1 $tmp_msg
         }
 
         # check file after moving
