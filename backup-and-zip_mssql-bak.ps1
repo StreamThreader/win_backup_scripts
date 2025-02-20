@@ -1,5 +1,5 @@
 
-# Version 1.00
+# Version 1.01
 # script for compress ms-sql bak files
 # and move to remote smb share
 
@@ -138,6 +138,15 @@ foreach ($db_name in $db_names) {
         $program = Start-Process $zipexe $cmd_args -PassThru
         $program.PriorityClass = "Idle"
         $program.WaitForExit()
+        
+        # check 7zip exit code
+        if ($program.ExitCode) {
+            $tmp_msg = "zip compressing failed"
+            logwriter 1 $tmp_msg
+        } else {
+            $tmp_msg = "zip compressing finished"
+            logwriter 0 $tmp_msg
+        }
     }
 
     # test zip file after creation
@@ -171,9 +180,19 @@ foreach ($db_name in $db_names) {
         $program.PriorityClass = "Idle"
         $program.WaitForExit()
 
+        # check robocopy exit code
+        if ($program.ExitCode) {
+            $tmp_msg = "move failed"
+            logwriter 1 $tmp_msg
+        } else {
+            $tmp_msg = "move finished"
+            logwriter 0 $tmp_msg
+        }
+
         # check file after moving
         If (test-path $backup_fs_path$zipfile_name) {
-            $tmp_msg = "move finished"
+            $tmp_msg = "file: "+$zipfile_name+`
+                " exist on remote storage"
             logwriter 0 $tmp_msg
         } else {
             $tmp_msg = "file: "+$zipfile_name+`
