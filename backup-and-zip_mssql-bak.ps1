@@ -1,8 +1,17 @@
 
-# Version 1.01
-# script for compress ms-sql bak files
-# and move to remote smb share
+# Version 1.02
+# 
+# By default (for ERP database)
+# 1) Search all files like:
+#  2025-02-20-ERP-11-10-00-full-d.bak
+#  2025-02-20-ERP-11-10-00-diff-d.bak
+#  2025-02-20-ERP-11-10-00-txlog-d.bak
+#
+# 2) Compress into 2025-02-20-ERP-d.7z
+#
+# 3) Move to remote smb share
 
+# list of databases
 $db_names = @(
     "ERP",
     "SKD"
@@ -14,11 +23,13 @@ $log_file = $backup_path+"00-logfile.txt"
 $backup_date = (Get-Date -Format "yyyy-MM-dd").ToString()
 $robocopyexe = "C:\Windows\System32\Robocopy.exe"
 $zipexe = "C:\Progra~1\7-Zip\7z.exe"
+# compression level (default normal)
 $ziplevel = "5"
+# number of used CPU cores
 $zipcpu = "12"
 # expected compression ratio in %
-# for calculate used space
 $compress_ratio = 10
+# tmp variables
 $expect_zip_size = 0
 $used_by_files = 0
 $size = 0
