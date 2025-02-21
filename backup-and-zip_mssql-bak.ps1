@@ -1,5 +1,5 @@
 
-# Version 1.02
+# Version 1.03
 # 
 # By default (for ERP database)
 # 1) Search all files like:
@@ -137,7 +137,7 @@ foreach ($db_name in $db_names) {
     foreach ($file_name in $files) {
         $file_name = $file_name.ToString()
 
-        $tmp_msg = "add new file to zip: "+$file_name
+        $tmp_msg = "compress started: "+$file_name
         logwriter 0 $tmp_msg
 
         $cmd_args = "a -y -mx="+$ziplevel+`
@@ -152,10 +152,10 @@ foreach ($db_name in $db_names) {
         
         # check 7zip exit code
         if ($program.ExitCode) {
-            $tmp_msg = "zip compressing failed"
+            $tmp_msg = "compressing failed: "+$file_name
             logwriter 1 $tmp_msg
         } else {
-            $tmp_msg = "zip compressing finished"
+            $tmp_msg = "compressing finished: "+$file_name
             logwriter 0 $tmp_msg
         }
     }
@@ -183,7 +183,7 @@ foreach ($db_name in $db_names) {
             " "+$backup_fs_path+`
             " "+$zipfile_name
 
-        $tmp_msg = "start move zip file: "+$zipfile_name
+        $tmp_msg = "start move: "+$zipfile_name
         logwriter 0 $tmp_msg
 
         # Set low process priority
@@ -193,10 +193,10 @@ foreach ($db_name in $db_names) {
 
         # check robocopy exit code
         if ($program.ExitCode) {
-            $tmp_msg = "move finished"
+            $tmp_msg = "move finished: "+$zipfile_name
             logwriter 0 $tmp_msg
         } else {
-            $tmp_msg = "move failed"
+            $tmp_msg = "move failed: "+$zipfile_name
             logwriter 1 $tmp_msg
         }
 
