@@ -137,7 +137,7 @@ foreach ($db_name in $db_names) {
     foreach ($file_name in $files) {
         $file_name = $file_name.ToString()
 
-        $tmp_msg = "compress started: "+$file_name
+        $tmp_msg = "compressing started: "+$file_name
         logwriter 0 $tmp_msg
 
         $cmd_args = "a -y -mx="+$ziplevel+`
@@ -164,7 +164,7 @@ foreach ($db_name in $db_names) {
     if (test-path $fqdn_zipfile) {
         $size = get-childitem $fqdn_zipfile | `
             Select-Object -ExpandProperty Length
-        $tmp_msg = "real zip file size: "+$size+" bytes"
+        $tmp_msg = "real zip size: "+$size+" bytes"
         logwriter 0 $tmp_msg
 
         $diff_size = $expect_zip_size - $size
@@ -183,7 +183,7 @@ foreach ($db_name in $db_names) {
             " "+$backup_fs_path+`
             " "+$zipfile_name
 
-        $tmp_msg = "start move: "+$zipfile_name
+        $tmp_msg = "move start: "+$zipfile_name
         logwriter 0 $tmp_msg
 
         # Set low process priority
