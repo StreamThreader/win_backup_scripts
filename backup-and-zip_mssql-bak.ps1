@@ -21,6 +21,7 @@ $backup_path = "E:\DBServer\SQL-BackUP\"
 $backup_fs_path = ""
 $log_file = $backup_path+"00-logfile.txt"
 $backup_date = (Get-Date -Format "yyyy-MM-dd").ToString()
+$backup_start_date = Get-Date
 $robocopyexe = "C:\Windows\System32\Robocopy.exe"
 $zipexe = "C:\Progra~1\7-Zip\7z.exe"
 # compression level (default normal)
@@ -220,3 +221,15 @@ foreach ($db_name in $db_names) {
         logwriter 1 $tmp_msg
     }
 }
+
+# calculate time duration
+$backup_end_date = Get-Date
+
+$backup_diff_date = New-TimeSpan `
+    -Start $backup_start_date `
+    -End $backup_end_date
+$tmp_msg = "Backup duration: "+$backup_diff_date
+logwriter 0 $tmp_msg
+
+$tmp_msg = "Backup finished: "+$backup_diff_date
+logwriter 0 $tmp_msg
