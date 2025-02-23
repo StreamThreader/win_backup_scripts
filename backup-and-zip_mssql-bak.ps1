@@ -1,5 +1,5 @@
 
-# Version 1.04
+# Version 1.05
 # 
 # By default (for ERP database)
 # 1) Search all files like:
@@ -231,5 +231,5 @@ $backup_diff_date = New-TimeSpan `
 $tmp_msg = "Backup duration: "+$backup_diff_date
 logwriter 0 $tmp_msg
 
-$tmp_msg = "---------- Backup finished --------"
+$tmp_msg = "--------------------- END SESSION ---------------"
 logwriter 0 $tmp_msg
